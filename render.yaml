@@ -2,6 +2,7 @@ services:
   - type: web
     name: auth-service
     env: java
+    javaVersion: "17"
     buildCommand: "mvn clean install"
     startCommand: "java -jar target/*.jar"
-    
+
