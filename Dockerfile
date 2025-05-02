@@ -1,6 +1,11 @@
-# Dockerfile
-FROM eclipse-temurin:17-jdk-alpine
+# Étape 1 : Build avec Maven et Java 21
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY . /app
-RUN ./mvnw clean install -DskipTests
-CMD ["java", "-jar", "target/auth-server-0.0.1-SNAPSHOT.jar"]
+COPY . .
+RUN mvn clean install -DskipTests
+
+# Étape 2 : Exécution avec JDK 21
+FROM eclipse-temurin:21-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
