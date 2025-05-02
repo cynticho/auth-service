@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: auth-service
+    env: java
+    buildCommand: "mvn clean install"
+    startCommand: "java -jar target/*.jar"
+    
